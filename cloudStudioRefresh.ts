@@ -35,7 +35,7 @@ async function fetchCloudStudio(): Promise<void> {
     headers.append('accept-encoding', 'gzip, deflate, br, zstd');
     headers.append('accept-language', 'zh-CN,zh;q=0.9');
     headers.append('priority', 'u=0, i');
-    headers.append('Cookie', 'cloudstudio-editor-session=276ac7da-61f1-41c9-9f99-282bf947ec17.d523e137-30e8-4f87-9fec-51d17ab93299.2ecef21e-51f8-4ce4-91d4-340d1277407f; key=a4540aac87bacb50c290d3a045a6cfdcea3f49029a0d0dbdf05e7a9840d69468');
+    headers.append('Cookie', 'cloudstudio-editor-session=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDbGFpbXMiOnsiaXNzIjoiY2xvdWRzdHVkaW8uY2x1YiIsImV4cCI6MTc0Nzc2MzIwNywiaWF0IjoxNzQ3NjMzNjA3fSwic3BhY2UiOiJmMDk2ZjA3MGU5ODY0OTQyYmI2OGVlYzkxZjk1YTdjOCIsInVzZXJfaWQiOiIzNjgzMTAiLCJ1c2VyX25pY2tuYW1lIjoiaGFuYmFvIn0.zl6-KLlj6WpdvbRsesGGV97dQ--5oa-SdpcveO5OzMs');
 
     console.log(`正在发送的请求头:`);
     for (const [key, value] of headers.entries()) {
