@@ -35,25 +35,19 @@ async function fetchCloudStudio(): Promise<void> {
     headers.append('accept-encoding', 'gzip, deflate, br, zstd');
     headers.append('accept-language', 'zh-CN,zh;q=0.9');
     headers.append('priority', 'u=0, i');
-    headers.append('Cookie', 'cloudstudio-editor-session=');
+    headers.append('Cookie', 'cloudstudio-editor-session=your cookie');
 
     console.log(`正在发送的请求头:`);
     for (const [key, value] of headers.entries()) {
       console.log(`  ${key}: ${value}`);
     }
 
-    // 设置超时时间为 30 秒
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000);
-
-    try {
-      const response = await fetch("https://f096f070e9864942bb68eec91f95a7c8.ap-shanghai.cloudstudio.club/?mode=edit", {
-        headers: headers,
-        method: 'POST',
-        // Deno 的 fetch 默认会跟随重定向。
-        // redirect: 'follow' // 默认行为
-        signal: controller.signal
-      });
+    const response = await fetch("your url", {
+      headers: headers,
+      method: 'POST',
+      // Deno 的 fetch 默认会跟随重定向。
+      // redirect: 'follow' // 默认行为
+    });
 
     console.log(`响应状态: ${response.status} ${response.statusText}`);
     console.log(`响应 URL (重定向后): ${response.url}`);
@@ -65,7 +59,7 @@ async function fetchCloudStudio(): Promise<void> {
       // console.log(`响应的前 1000 个字符: ${text.substring(0, 1000)}...`);
 
       // 检查响应 URL 是否是你期望的成功“跳转”后的 URL
-      if (response.url === "") {
+      if (response.url === "https://cloudstudio.net/a/26623736458117120/edit" || response.url.startsWith("https://f096f070e9864942bb68eec91f95a7c8.ap-shanghai.cloudstudio.club")) {
         // 或者最终的目标 URL 应该是什么
         console.log("请求成功，并且似乎已到达目标页面或相关资源。\n");
       } else {
@@ -75,20 +69,10 @@ async function fetchCloudStudio(): Promise<void> {
       const errorText = await response.text();
       console.error(`错误: ${response.status} ${response.statusText}`);
       console.error(`错误响应体 (前 500 字符): ${errorText.substring(0, 500)}\n`);
-      fetchCloudStudio();
-    }
-    } finally {
-      // 清除超时定时器
-      clearTimeout(timeoutId);
     }
   } catch (error) {
-    if (error.name === 'AbortError') {
-      console.error(`请求超时（30秒）: 重新尝试请求\n`);
-    } else {
-      console.error(`发生异常: ${error.message}\n`);
-    }
-    // 无论是超时还是其他错误，都重试请求
-    setTimeout(() => fetchCloudStudio(), 1000); // 等待1秒后重试
+    console.error(`发生异常: ${error.message}\n`);
+    fetchCloudStudio();
   }
 }
 
@@ -104,6 +88,3 @@ fetchCloudStudio();
 Deno.cron("CloudStudio Refresh", "* * * * *", () => {
   return fetchCloudStudio();
 });
-
-
-
