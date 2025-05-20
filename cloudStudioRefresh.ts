@@ -65,7 +65,7 @@ async function fetchCloudStudio(): Promise<void> {
       // console.log(`响应的前 1000 个字符: ${text.substring(0, 1000)}...`);
 
       // 检查响应 URL 是否是你期望的成功“跳转”后的 URL
-      if (response.url === "")) {
+      if (response.url === "") {
         // 或者最终的目标 URL 应该是什么
         console.log("请求成功，并且似乎已到达目标页面或相关资源。\n");
       } else {
